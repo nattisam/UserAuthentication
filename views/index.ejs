@@ -1,5 +1,58 @@
-<h1>Greetings <%= name %></h1>
-<h2>Welcome to HOAS</h2>
-<form action="/logout?_method=DELETE" method="POST">
-    <button type="submit">Log Out</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+</head>
+<header><h1>HOAS</h1></header> 
+<nav>
+       <ul>
+        <li><a href="pj.html">Home</a></li>
+        <li><a href="conte.html">Content</a></li>     
+        <li><a href="Help">Help</a></li>
+        <li>Account: <%= name %></li>
+        <li>
+            <form class="logout-form" action="/logout?_method=DELETE" method="POST">
+                <button type="submit">Log Out</button>
+            </form>
+        </li>
+       </ul>
+       </nav>
+<body>
+    <div class="all">
+        <p class="main">Are you a leader who is interested in cultter<br> and what to know more about the language<br> and cultter of east africa and english </p>
+        <button class="rr"><a href="joi.html">join us</a></button>
+    </div>
+    <div class="ll">
+        
+        <div class="courses">
+            <p>Learn english improve your gramer and communication skill with the best teachers around the world </p>
+               <button><a href="engl.html">Come join us</a></button>
+        </div>
+        <div class="courses">
+            <p>Trying to learn amharic, you have come to the right place teaching you the culter and languge at the same time we will level up your communcation skill</p>
+            <button><a href="amharic.html">Come join us</a></button>
+        </div>
+        <div class="courses">
+            <p>Learn oromic we have the best teachers to teach you how to speek and pronounce oromic in a perfect fllow</p>
+              <button><a href="oromic.html">Come join us</a></button>
+        </div>
+    </div>
+    <div class="qw"><h2>Mathimatics and science and technology class</h2></div>
+    <div class="ee">
+        <div style="background-image: url(sci.jpg);">
+        <p>By learning science and technology we can help our cultter grow and succeed for the futer generation</p>
+          <button><a href="sci.html">Come join us</a></button></div>
+        <div style="background-image: url(sci2.jpg);">
+        <p>We make mathimatic easy and fun for students,learning mathimatics could solve many problems and help us succeed in other fileds</p>
+         <button><a href="math.html">Come join us</a></button></div>
+    </div>
+</body>
+<footer>
+    <span>
+        <p class="qq">CONTACT US ""(123)-909-777</p>
+    </span>
+</footer> 
+</html>

@@ -9,6 +9,7 @@ const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
+const path = require('path'); // Import the path module
 
 const initializePassport = require('./passport-config')
 initializePassport(
@@ -30,6 +31,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', checkIfAuthenticated, (req, res) => {
     res.render('index.ejs', { name: req.user.name })
@@ -51,19 +53,32 @@ app.get('/register', checkIfNotAuthenticated, (req, res) => {
 
 app.post('/register', checkIfNotAuthenticated, async (req, res) => {
     try {
-        const hashedPassWord = await bcrypt.hash(req.body.password, 10)
-        users.push({
+        // Check if user with the same email already exists
+        const existingUser = users.find(user => user.email === req.body.email);
+        if (existingUser) {
+            // If user with the same email exists, redirect back to register page with an error message
+            req.flash('error', 'An account with this email already exists.');
+            return res.redirect('/register');
+        }
+
+        // If user with the same email doesn't exist, proceed with registration
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const newUser = {
             id: Date.now().toString(),
             name: req.body.name,
             email: req.body.email,
-            password: hashedPassWord
-        })
-        res.redirect("/login")
+            password: hashedPassword
+        };
+        users.push(newUser);
+        req.flash('success', 'Registration successful! You can now log in.');
+        res.redirect("/login");
     } catch {
-        res.redirect("/register")
+        // Handle any unexpected errors during registration
+        req.flash('error', 'An error occurred during registration. Please try again.');
+        res.redirect("/register");
     }
-    console.log(users)
-})
+});
+
 
 app.delete('/logout', (req, res, next) => {
     req.logOut((err) => {
